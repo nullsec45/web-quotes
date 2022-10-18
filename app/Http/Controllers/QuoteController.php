@@ -134,7 +134,10 @@ class QuoteController extends Controller
 
     public function random(){
         $quote=Quote::inRandomOrder()->first();
-        return view("quotes.single", compact("quote"));
+        $user=Auth::user();
+        $notifications=Notification::where("user_id", $user->id)->orderBy("id","desc")->get();
+        $notif_model=new Notification;
+        return view("quotes.single", compact("quote", "user","notif_model"));
     }
 
 
